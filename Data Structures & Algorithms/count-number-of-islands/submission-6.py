@@ -1,0 +1,64 @@
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        # DFS
+
+        rows, cols = len(grid), len(grid[0])
+        directions = [(1,0), (-1,0), (0,1), (0,-1)]
+
+        islands = 0
+
+        def dfs(row, col):
+            if row<0 or col<0 or row>=rows or col>=cols or grid[row][col] == '0':
+                return
+            grid[row][col] = '0'
+            for dr, dc in directions:
+                nr, nc = row+dr, col+dc
+                dfs(nr, nc)
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == '1':
+                    dfs(row, col)
+                    islands+=1
+        return islands
+
+
+
+
+
+
+
+
+
+
+
+        '''
+        from collections import deque
+        # BFS
+
+        rows, cols = len(grid), len(grid[0])
+        directions = [(1,0), (-1,0), (0,1), (0,-1)]
+
+        islands = 0
+
+        def bfs(row, col):
+            queue = deque([(row, col)])
+            while len(queue)>0:
+                n = len(queue)
+                for _ in range(n):
+                    r, c = queue.popleft()
+                    for dr, dc in directions:
+                        nr, nc = r+dr, c+dc
+                        if 0<=nr<rows and 0<=nc<cols and grid[nr][nc] == '1':
+                            queue.append((nr, nc))
+                            grid[nr][nc] = '0'
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == '1':
+                    grid[row][col] == '0'
+                    bfs(row, col)
+                    islands+=1
+
+        return islands
+        '''
